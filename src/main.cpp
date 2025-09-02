@@ -1,12 +1,12 @@
 #include <iostream>
 #include <string>
-#include "Storage.h"
+#include "Database.h"
 
 int main() {
-  Storage<std::string> store;
-  store.set("name", "Jack");
+  Database db;
+  db.set("name", "Jack");
 
-  if (auto val = store.get("name")) {
+  if (auto val = db.get("name")) {
     std::println("Name: {}", *val);
   }
   return 0;
