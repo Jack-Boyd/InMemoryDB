@@ -8,6 +8,8 @@ include_directories(include)
 
 add_executable(InMemoryDB
   src/main.cpp
+  src/Database.cpp
+  src/QueryEngine.cpp
 )
 
 enable_testing()
