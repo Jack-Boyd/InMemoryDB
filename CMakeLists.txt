@@ -10,6 +10,7 @@ add_executable(InMemoryDB
   src/main.cpp
   src/Database.cpp
   src/QueryEngine.cpp
+  src/Transaction.cpp
 )
 
 enable_testing()

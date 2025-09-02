@@ -1,5 +1,8 @@
-#include <string>
+#pragma once
+
 #include "Database.h"
+#include "Transaction.h"
+#include <string>
 
 class QueryEngine {
 public:
@@ -7,4 +10,5 @@ public:
   std::string execute(const std::string& cmd);
 private:
   Database& m_db;
+  Transaction m_tx;
 };
