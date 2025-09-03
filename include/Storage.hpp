@@ -28,6 +28,9 @@ public:
     return m_data.erase(key) > 0;
   };
 
+  const std::unordered_map<std::string, T>& data() const {
+    return m_data;
+  }
   size_t size() const {
     return m_data.size();
   };

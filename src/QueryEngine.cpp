@@ -1,9 +1,15 @@
-#include "QueryEngine.h"
+#include "QueryEngine.hpp"
+#include "Persistence.hpp"
 #include <sstream>
 #include <vector>
+#include <functional>
 #include <algorithm>
 
 QueryEngine::QueryEngine(Database &db) : m_db(db), m_tx(db) {}
+
+void QueryEngine::setShutdownCallback(std::function<void()> cb) {
+  m_shutdownCallback = std::move(cb);
+}
 
 std::string QueryEngine::execute(const std::string &command) {
   std::istringstream iss(command);
@@ -46,11 +52,16 @@ std::string QueryEngine::execute(const std::string &command) {
   }
   else if (action == "COMMIT") {
     m_tx.commit();
-    return "Transaction committed";
+    Persistence::save(m_db, "database.json");
+    return "Transaction committed and saved";
   }
   else if (action == "ROLLBACK") {
     m_tx.rollback();
     return "Transaction rolled back";
+  }
+  else if (action == "SHUTDOWN") {
+    if (m_shutdownCallback) m_shutdownCallback();
+    return "Server shutting down...";
   }
   else {
     return "ERROR: Unknown command";
